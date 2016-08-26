@@ -1,0 +1,17 @@
+{
+  'parser': 'babel-eslint',
+  'extends': 'airbnb',
+  'rules': {
+      'indent': [2, 4, { 'SwitchCase': 1, 'VariableDeclarator': 1 }],
+      // react/prefer-stateless-function doesn't recognise import { Component }
+      'react/prefer-stateless-function': 0,
+      'valid-jsdoc': 2,
+      'require-jsdoc': ['error', {
+            'require': {
+                'FunctionDeclaration': true,
+                'MethodDefinition': false,
+                'ClassDeclaration': false,
+            },
+        }],
+  },
+}

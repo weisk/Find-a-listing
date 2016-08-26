@@ -1,0 +1,10 @@
+{
+    "minify": true,
+    "options": [
+        "setClasses"
+    ],
+    "feature-detects": [
+        "test/css/calc",
+        "test/css/flexbox"
+    ]
+}
