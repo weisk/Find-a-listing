@@ -91,9 +91,15 @@ app.engine('hbs', handlebars({
 }));
 
 console.log(`ENV: ${process.env.NODE_ENV}`);
-spdy.createServer(sslOptions, app).listen(http2PortNumber, http2Host, () => {
-    console.log(`HTTP2:  https://${http2Host}:${http2PortNumber}`);
-});
+if (process.env.NODE_ENV === 'development') {
+    app.listen(http2PortNumber, http2Host, () => {
+        console.log(`HTTP:  http://${http2Host}:${http2PortNumber}`);
+    });
+} else {
+    spdy.createServer(sslOptions, app).listen(http2PortNumber, http2Host, () => {
+        console.log(`HTTP2:  https://${http2Host}:${http2PortNumber}`);
+    });
+}
 
 // Define routes
 routeConfig(app);
