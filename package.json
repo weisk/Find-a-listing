@@ -26,7 +26,6 @@
   "dependencies": {
     "@domjtalbot/sassdoc-loader": "^0.1.2-beta",
     "@turf/turf": "^3.5.2",
-    "ScheduledMonumentsGeoJSON": "https://github.com/JPMSoftwire/ScheduledMonumentsGeoJSON.git",
     "babel-core": "^6.13.2",
     "babel-eslint": "^6.1.2",
     "babel-loader": "^6.2.5",
@@ -71,9 +70,7 @@
     "spdy": "^3.4.0",
     "time-grunt": "^1.4.0",
     "transform-loader": "^0.2.3",
-    "webworkify-webpack": "^1.1.7"
-  },
-  "devDependencies": {
+    "webworkify-webpack": "^1.1.7",
     "eslint-config-airbnb": "^10.0.1",
     "eslint-loader": "^1.5.0",
     "eslint-plugin-import": "^1.13.0",
