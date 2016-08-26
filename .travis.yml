@@ -12,4 +12,4 @@ deploy:
   on:
     repo: domjtalbot/Find-a-listing
     branch: master
-    node: 'latest'
+    node: 'stable'
