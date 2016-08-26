@@ -4,10 +4,6 @@ notifications:
 node_js:
 - stable
 
-cache:
-  directories:
-  - node_modules
-
 deploy:
   provider: heroku
   api_key:
