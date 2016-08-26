@@ -5,11 +5,7 @@ import '../../node_modules/mapbox-gl/dist/mapbox-gl.css';
 import '_leaflet.scss';
 import { getCurrentPosition } from 'navigator';
 import turf from '@turf/turf';
-
-const fs = require('fs');
-const path = require('path');
-
-const listedBuildings = JSON.parse(fs.readFileSync(path.join(__dirname, '../../bin/data/HAR/HAR-listed-buildings.geojson'), 'utf8'));
+import { listedBuildings, getNearest, getWithin } from 'heritageList';
 
 mapboxgl.accessToken = `pk.eyJ1IjoiZG9tanQiLCJhIjoiY2lzNTM0aW90MDAxMzJ1bmZkOWU5ZHdqaiJ9.ZJTAzeB-kGyLv71rkxaRPw`;
 
@@ -152,6 +148,31 @@ map.on('load', () => {
                 'circle-color': '#0092ff'
             }
         });
+
+        getWithin(userlocation, 5, 'miles', (assets, count) => {
+            const searchRadius = 5;
+            const unit = 'miles';
+            if (count > 1) {
+                console.log(`There are ${count} heritage assets within ${searchRadius} ${unit}`);
+            } else if (count === 1) {
+                console.log(`There is ${count} heritage asset within ${searchRadius} ${unit}`);
+            } else {
+                console.log(`There are no heritage assests within ${searchRadius} ${unit}`);
+            }
+        });
+
+        getNearest(userlocation, (asset, distance, unit) => {
+            const buildingname = asset.properties.Published_;
+            asset.properties['marker-size'] = '15';
+            map.getSource('listedBuildings').setData(listedBuildings);
+
+            const newbounds = new LngLatBounds(userlocation.geometry.coordinates, asset.geometry.coordinates);
+            map.fitBounds(newbounds, {
+                padding: 120,
+            });
+
+            console.log(`The nearest heritage asset is ${buildingname}, which is ${distance} ${unit} away from your current location`);
+        });
     });
 
     const groupName = '';
@@ -202,22 +223,6 @@ map.on('load', () => {
     });
 
 });
-window.turf = turf;
-window.getNearestBuilding = () => {
-    var nearestListedBuilding = turf.nearest(userlocation, listedBuildings);
-    const dis = turf.distance(userlocation, nearestListedBuilding, 'miles');
-    nearestListedBuilding.properties['marker-size'] = '15';
-    const buildingname = nearestListedBuilding.properties.Published_;
-    map.getSource('listedBuildings').setData(listedBuildings);
-    const userlocationBuffer = turf.buffer(userlocation, 500, 'meters');
-    const userlocationFeature = turf.featureCollection([userlocationBuffer]);
-    const closelistedbuildings = turf.within(listedBuildings, userlocationFeature);
-    console.log(closelistedbuildings);
-    const newbounds = new LngLatBounds(userlocation.geometry.coordinates, nearestListedBuilding.geometry.coordinates);
-    map.fitBounds(newbounds, {
-        padding: 120,
-    });
-    console.log(`There are ${closelistedbuildings.features.length} listed buildings near you. The nearest listed building is ${buildingname}, which is ${Math.round(dis * 10) / 10} miles away from your current location`);
-}
+
 /* eslint-enable */
 export { map as default };
