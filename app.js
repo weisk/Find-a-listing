@@ -101,7 +101,7 @@ app.engine('hbs', handlebars({
 
 
 if (process.env.NODE_ENV === 'development') {
-    app.listen(http2PortNumber, http2Host, () => {
+    app.listen(process.env.PORT || http2PortNumber, http2Host, () => {
         console.log(`HTTP:  http://${http2Host}:${http2PortNumber}`);
     });
 } else {
