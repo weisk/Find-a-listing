@@ -13,3 +13,6 @@ deploy:
     repo: domjtalbot/Find-a-listing
     branch: master
     node: 'stable'
+
+script:
+    - npm run buildAssets
