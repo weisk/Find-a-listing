@@ -6,6 +6,9 @@ import '_leaflet.scss';
 import { getCurrentPosition } from 'navigator';
 import turf from '@turf/turf';
 import { listedBuildings, getNearest, getWithin } from 'heritageList';
+import Directions from 'mapbox-gl-directions';
+import { decode } from 'polyline';
+import moment from 'moment';
 
 mapboxgl.accessToken = `pk.eyJ1IjoiZG9tanQiLCJhIjoiY2lzNTM0aW90MDAxMzJ1bmZkOWU5ZHdqaiJ9.ZJTAzeB-kGyLv71rkxaRPw`;
 
@@ -36,6 +39,7 @@ const map = new Map({
     maxBounds: maxUkBounds,
 });
 window.map = map;
+window.mapboxgl = mapboxgl;
 
 listedBuildings.features.forEach((feature) => {
         const marker = {
@@ -43,6 +47,54 @@ listedBuildings.features.forEach((feature) => {
             'marker-size': '11',
         };
         feature.properties = Object.assign({}, feature.properties, marker);
+});
+
+const directions = new Directions({
+  unit: 'metric',
+  profile: 'walking',
+  container: 'directions'
+});
+directions._map = map;
+window.directions = directions;
+
+directions.on('route', (direction) => {
+    console.log('Direction object:');
+    console.log(direction);
+
+    const routeGeoJSON = {
+        type: 'Feature',
+        properties: {
+            summary: direction.route[0].summary,
+        },
+        geometry: {
+            type: 'LineString',
+            coordinates: decode(direction.route[0].geometry, 6).map((c) => {
+                return c.reverse();
+            }),
+        },
+    };
+
+    console.log(routeGeoJSON);
+    map.addSource('directions', {
+        type: 'geojson',
+        data: routeGeoJSON,
+    });
+
+    map.addLayer({
+        id: 'route',
+        type: 'line',
+        source: 'directions',
+        layout: {
+            'line-join': 'round',
+            'line-cap': 'round'
+        },
+        paint: {
+            'line-color': '#fafafa',
+            'line-width': 3,
+        }
+    });
+
+    console.log(`It will take approx. ${moment.duration(direction.route[0].duration, 'seconds').humanize()} to walk to the nearest heritage asset`);
 });
 
 map.on('load', () => {
@@ -172,6 +224,9 @@ map.on('load', () => {
             });
 
             console.log(`The nearest heritage asset is ${buildingname}, which is ${distance} ${unit} away from your current location`);
+
+            directions.setOrigin(userlocation.geometry.coordinates);
+            directions.setDestination(asset.geometry.coordinates);
         });
     });
 
@@ -221,7 +276,6 @@ map.on('load', () => {
         const features = map.queryRenderedFeatures(e.point, historicenglandLayers);
         map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
     });
-
 });
 
 /* eslint-enable */
