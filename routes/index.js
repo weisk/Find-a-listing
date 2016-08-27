@@ -7,6 +7,7 @@ import express from 'express';
 import homepage from './homepage-route';
 import mappage from './map-route';
 import { assetsByChunkName as webpack } from '../bin/webpack.json';
+import sslRedirect from 'heroku-ssl-redirect';
 
 export default function routeConfig(app) {
     // Global variables
@@ -25,6 +26,7 @@ export default function routeConfig(app) {
     app.use('/map', mappage);
 
     if (process.env.NODE_ENV !== 'production') {
+        app.use(sslRedirect());
         app.use('/bin', express.static('./bin', { maxAge: '30 days' }));
     }
 }
