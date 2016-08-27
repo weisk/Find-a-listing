@@ -19,40 +19,45 @@ const http2Host = process.env.HTTP2HOST;
 const sslKey = fs.readFileSync(process.env.SSL_KEY);
 const sslCrt = fs.readFileSync(process.env.SSL_CRT);
 
-let sslOptions = {
-    key: sslKey,
-    cert: sslCrt,
-    sdpy: {
-        ciphers: [
-            'ECDHE-RSA-AES256-SHA384',
-            'DHE-RSA-AES256-SHA384',
-            'ECDHE-RSA-AES256-SHA256',
-            'DHE-RSA-AES256-SHA256',
-            'ECDHE-RSA-AES128-SHA256',
-            'DHE-RSA-AES128-SHA256',
-            'HIGH',
-            '!aNULL',
-            '!eNULL',
-            '!EXPORT',
-            '!DES',
-            '!RC4',
-            '!MD5',
-            '!PSK',
-            '!SRP',
-            '!CAMELLIA',
-        ].join(':'),
-        honorCipherOrder: true,
-    },
-};
+let sslOptions = {};
+
+if (process.env.NODE_ENV !== 'development') {
+    sslOptions = {
+        key: sslKey,
+        cert: sslCrt,
+        sdpy: {
+            ciphers: [
+                'ECDHE-RSA-AES256-SHA384',
+                'DHE-RSA-AES256-SHA384',
+                'ECDHE-RSA-AES256-SHA256',
+                'DHE-RSA-AES256-SHA256',
+                'ECDHE-RSA-AES128-SHA256',
+                'DHE-RSA-AES128-SHA256',
+                'HIGH',
+                '!aNULL',
+                '!eNULL',
+                '!EXPORT',
+                '!DES',
+                '!RC4',
+                '!MD5',
+                '!PSK',
+                '!SRP',
+                '!CAMELLIA',
+            ].join(':'),
+            honorCipherOrder: true,
+        },
+    };
+}
 
 if (process.env.NODE_ENV === 'production') {
+
     const sslCa = fs.readFileSync(process.env.SSL_CA);
     sslOptions = Object.assign({}, sslOptions, {
         ca: sslCa,
     });
 }
 
-if (process.env.NODE_ENV === 'local') {
+if (process.env.NODE_ENV !== 'production') {
     console.log('Helmet: enabled');
     app.use(helmet());
     app.use(helmet.hsts({
