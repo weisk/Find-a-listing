@@ -4,7 +4,9 @@
   "description": "Search for UK listing buildings near you! - Prototype",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 0"
+      "start": "node index.js",
+      "test": "echo \"Error: no test specified\" && exit 0",
+      "buildAssets": "webpack --progress && grunt"
   },
   "repository": {
     "type": "git",
