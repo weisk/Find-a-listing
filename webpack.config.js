@@ -20,10 +20,10 @@ module.exports = {
     },
     module: {
         preLoaders: [
-            {
+            /*{
                 test: /\.scss$/,
                 loader: 'scsslint'
-            },
+            },*/
             {
                 test: /\.js$/,
                 exclude:  ['node_modules', 'bower_components', 'bin'],
