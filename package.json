@@ -6,7 +6,7 @@
   "scripts": {
       "start": "node index.js",
       "test": "echo \"Error: no test specified\" && exit 0",
-      "buildAssets": "webpack --progress --display-reasons --display-error-details --verbose && grunt"
+      "buildAssets": "webpack --progress --display-reasons --display-error-details --display-modules --display-exclude && grunt"
   },
   "repository": {
     "type": "git",
