@@ -101,8 +101,8 @@ app.engine('hbs', handlebars({
 
 
 if (process.env.NODE_ENV === 'development') {
-    app.listen(process.env.PORT || http2PortNumber, http2Host, () => {
-        console.log(`HTTP:  http://${http2Host}:${http2PortNumber}`);
+    app.listen(process.env.PORT, http2Host, () => {
+        console.log(`HTTP:  http://${http2Host}:${process.env.PORT}`);
     });
 } else {
     spdy.createServer(sslOptions, app).listen(http2PortNumber, http2Host, () => {
