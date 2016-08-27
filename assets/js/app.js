@@ -94,7 +94,9 @@ directions.on('route', (direction) => {
         }
     });
 
-    console.log(`It will take approx. ${moment.duration(direction.route[0].duration, 'seconds').humanize()} to walk to the nearest heritage asset`);
+    const consoleString = `It will take approx. ${moment.duration(direction.route[0].duration, 'seconds').humanize()} to walk to the nearest heritage asset`;
+    console.log(consoleString);
+    document.querySelector('.mapSidebar').innerHTML += `<p>${consoleString}</p>`;    
 });
 
 map.on('load', () => {
@@ -205,11 +207,17 @@ map.on('load', () => {
             const searchRadius = 200;
             const unit = 'meters';
             if (count > 1) {
-                console.log(`There are ${count} heritage assets within ${searchRadius} ${unit}`);
+                const consoleString = `There are ${count} heritage assets within ${searchRadius} ${unit}`;
+                console.log(consoleString);
+                document.querySelector('.mapSidebar').innerHTML += `<p>${consoleString}</p>`;
             } else if (count === 1) {
-                console.log(`There is ${count} heritage asset within ${searchRadius} ${unit}`);
+                const consoleString = `There is ${count} heritage asset within ${searchRadius} ${unit}`;
+                console.log(consoleString);
+                document.querySelector('.mapSidebar').innerHTML += `<p>${consoleString}</p>`;
             } else {
-                console.log(`There are no heritage assests within ${searchRadius} ${unit}`);
+                const consoleString = `There are no heritage assests within ${searchRadius} ${unit}`;
+                console.log(consoleString);
+                document.querySelector('.mapSidebar').innerHTML += `<p>${consoleString}</p>`;
             }
         });
 
@@ -222,9 +230,9 @@ map.on('load', () => {
             map.fitBounds(newbounds, {
                 padding: 120,
             });
-
-            console.log(`The nearest heritage asset is ${buildingname}, which is ${distance} ${unit} away from your current location`);
-
+            const consoleString = `The nearest heritage asset is ${buildingname}, which is ${distance} ${unit} away from your current location`;
+            console.log(consoleString);
+            document.querySelector('.mapSidebar').innerHTML += `<p>${consoleString}</p>`;
             directions.setOrigin(userlocation.geometry.coordinates);
             directions.setDestination(asset.geometry.coordinates);
         });
