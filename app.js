@@ -12,16 +12,20 @@ import compress from 'compression';
 import routeConfig from './routes/index.js';
 import minifyHTML from 'express-minify-html';
 
+console.log(`ENV: ${process.env.NODE_ENV}`);
+
 // Server settings
 const app = express();
 const http2PortNumber = process.env.HTTP2PORT || 5000;
 const http2Host = process.env.HTTP2HOST;
-const sslKey = fs.readFileSync(process.env.SSL_KEY);
-const sslCrt = fs.readFileSync(process.env.SSL_CRT);
 
+let sslKey = null;
+let sslCrt = null;
 let sslOptions = {};
 
 if (process.env.NODE_ENV !== 'development') {
+    sslKey = fs.readFileSync(process.env.SSL_KEY);
+    sslCrt = fs.readFileSync(process.env.SSL_CRT);
     sslOptions = {
         key: sslKey,
         cert: sslCrt,
@@ -95,7 +99,7 @@ app.engine('hbs', handlebars({
     partialsDir: 'views/partials',
 }));
 
-console.log(`ENV: ${process.env.NODE_ENV}`);
+
 if (process.env.NODE_ENV === 'development') {
     app.listen(http2PortNumber, http2Host, () => {
         console.log(`HTTP:  http://${http2Host}:${http2PortNumber}`);
