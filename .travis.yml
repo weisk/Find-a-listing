@@ -7,12 +7,13 @@ node_js:
 cache:
   directories:
   - node_modules
-  
+
 deploy:
   provider: heroku
   api_key:
     secure: PzlUUI2toCD/cmsA6Imvud7MDSj6rLubGuAD6+M07FTUXUkXWAREkH7NNE2OxgdGQwT0ht57+VdzejX33KfmouOmSq7FgtQzhh8X4lXtt6DhawQqnFnLV9y+6KR6vJdsUukFNlA2VpYDEf6/ZZlCj9mWnREP6ITq6k1Pyfih2pGKD8ovQzJRZ1yv+XBKMKXtlVu2upogASIlEceoQX0sCMekJ2Qj0y8d9i6IpmpICH27hJs5YV9fSu6nE1968YSDn1n2ZTmouhWRX7/vh512JZmeOCTK60vrD/cuxe6Fp5jHbOQZfScObzkINGezDBKg/eS+lqWkiiBo1Si2H7HaiV21oNGRXwaitdM3x5ajeSgljnd+D/fWoZm7ArA40AMXt7yVVi17WsfJzMtlWONSRziXbQsKWFu/gr+gFzy0UJxEeGaiEtNVJWMY07CKFLOo4Zd+88LiS+P58z1kDl0/AatxQVEtCkADU/B/1Zx2OFpds47ATgR2vvreOxDOPuHP/DCOpfA+1GTFrxXsrxRttZB/4Kq1WZ3Qco2lfDopkIGBT6xpKborhuOtXXOUEwKyAIFHJ+gj3q/Vw8RKvXYTDCdQKuHQis4WlqWdBcyGFTFlNaJlp2W+dWiHW5IkYl0gUfbjZn+UrqkXsLfWxJIU7kRfHPIgZZdMN4Gcp1iRHDI=
   app: find-a-listing
+  skip_cleanup: true
   on:
     repo: domjtalbot/Find-a-listing
     branch: master
