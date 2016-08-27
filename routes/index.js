@@ -24,7 +24,7 @@ export default function routeConfig(app) {
     app.use('/', homepage);
     app.use('/map', mappage);
 
-    if (process.env.NODE_ENV === 'local') {
+    if (process.env.NODE_ENV !== 'production') {
         app.use('/bin', express.static('./bin', { maxAge: '30 days' }));
     }
 }
