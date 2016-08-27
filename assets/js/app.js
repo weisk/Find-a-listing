@@ -149,9 +149,9 @@ map.on('load', () => {
             }
         });
 
-        getWithin(userlocation, 5, 'miles', (assets, count) => {
-            const searchRadius = 5;
-            const unit = 'miles';
+        getWithin(userlocation, 200, 'meters', (assets, count) => {
+            const searchRadius = 200;
+            const unit = 'meters';
             if (count > 1) {
                 console.log(`There are ${count} heritage assets within ${searchRadius} ${unit}`);
             } else if (count === 1) {
