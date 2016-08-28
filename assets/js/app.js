@@ -96,22 +96,22 @@ directions.on('route', (direction) => {
 
     const consoleString = `It will take approx. ${moment.duration(direction.route[0].duration, 'seconds').humanize()} to walk to the nearest heritage asset`;
     console.log(consoleString);
-    document.querySelector('.mapSidebar').innerHTML += `<p>${consoleString}</p>`;    
+    document.querySelector('.mapSidebar').innerHTML += `<p>${consoleString}</p>`;
 });
 
 map.on('load', () => {
     map.fitBounds(ukBounds);
 
-    map.addSource('listedBuildings', {
+    map.addSource('HARlistedbuildings', {
         type: 'geojson',
         data: listedBuildings,
         cluster: true,
     });
 
     map.addLayer({
-        'id': 'unclustered-points',
+        'id': 'HARlistedbuildings-unclustered-points',
         'type': 'symbol',
-        'source': 'listedBuildings',
+        'source': 'HARlistedbuildings',
         'layout': {
             'icon-image': '{marker}-{marker-size}'
         },
@@ -129,7 +129,7 @@ map.on('load', () => {
         map.addLayer({
             'id': 'cluster-' + i,
             'type': 'circle',
-            'source': 'listedBuildings',
+            'source': 'HARlistedbuildings',
             'paint': {
                 'circle-color': layer[1],
                 'circle-radius': 18
@@ -146,7 +146,7 @@ map.on('load', () => {
     map.addLayer({
         'id': 'cluster-count',
         'type': 'symbol',
-        'source': 'listedBuildings',
+        'source': 'HARlistedbuildings',
         'layout': {
             'text-field': '{point_count}',
             'text-font': [
@@ -224,7 +224,7 @@ map.on('load', () => {
         getNearest(userlocation, (asset, distance, unit) => {
             const buildingname = asset.properties.Published_;
             asset.properties['marker-size'] = '15';
-            map.getSource('listedBuildings').setData(listedBuildings);
+            map.getSource('HARlistedbuildings').setData(listedBuildings);
 
             const newbounds = new LngLatBounds(userlocation.geometry.coordinates, asset.geometry.coordinates);
             map.fitBounds(newbounds, {
@@ -241,7 +241,7 @@ map.on('load', () => {
     const groupName = '';
     const historicenglandLayers = {
         layers: [
-            'unclustered-points',
+            'HARlistedbuildings-unclustered-points',
             // `${groupName}listedBuildings`,
             // `${groupName}scheduledMonuments`,
             // `${groupName}parksAndGardens`,

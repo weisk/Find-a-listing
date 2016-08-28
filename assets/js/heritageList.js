@@ -4,7 +4,7 @@ import { nearest, distance, buffer, featureCollection, within } from '@turf/turf
 const fs = require('fs');
 const path = require('path');
 
-export const listedBuildings = JSON.parse(fs.readFileSync(path.join(__dirname, '../../bin/data/HAR/HAR-listed-buildings.geojson'), 'utf8'));
+export const listedBuildings = JSON.parse(fs.readFileSync(path.join(__dirname, '../../bin/listedBuildings.geojson'), 'utf8'));
 
 export function getNearest(pointA, success) {
     const asset = nearest(pointA, listedBuildings);

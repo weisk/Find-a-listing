@@ -8,6 +8,9 @@
     "test": "echo \"Error: no test specified\" && exit 0",
     "buildAssets": "webpack --progress --display-error-details && grunt"
   },
+  "bin": {
+    "heritage-geojson": "heritage-geojson.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/domjtalbot/find-a-listing.git"
@@ -36,6 +39,7 @@
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-0": "^6.5.0",
     "clean-webpack-plugin": "^0.1.10",
+    "commander": "^2.9.0",
     "compression": "^1.6.2",
     "cordova-plugin-device-orientation": "^1.0.3",
     "css-loader": "^0.23.1",
@@ -54,6 +58,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "favicons-webpack-plugin": "0.0.6",
     "file-loader": "^0.9.0",
+    "geobuf": "^2.0.0",
     "geoip-lite": "^1.1.8",
     "geoip-native-lite": "^0.1.0",
     "grunt": "^1.0.1",
@@ -70,6 +75,7 @@
     "modernizr-loader": "0.0.5",
     "moment": "^2.14.1",
     "node-sass": "^3.8.0",
+    "pbf": "^2.0.1",
     "polyline": "^0.2.0",
     "postcss-cssnext": "^2.7.0",
     "postcss-inline-image": "^0.1.1",
