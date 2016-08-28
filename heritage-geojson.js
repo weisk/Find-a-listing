@@ -18,7 +18,7 @@ let compressFile = (file, options) => {
                 featureDate = featureDate.replace('\/', '-');
                 const momentDate = moment(featureDate, 'YYYY-MM-DD');
                 const listDate = momentDate.unix();
-                feature.g = {
+                feature.p = {
                     listEntry: parseInt(feature.properties.ListEntry),
                     name: feature.properties.Name,
                     grade: feature.properties.Grade,
@@ -26,7 +26,7 @@ let compressFile = (file, options) => {
                 };
                 feature.g = {
                     t: feature.geometry.type,
-                    c: feature.geometry.coordinates,
+                    c: polyline.encode([feature.geometry.coordinates]),
                 };
                 feature.t = feature.type;
                 delete feature.type;
