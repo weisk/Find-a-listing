@@ -8,9 +8,6 @@
     "test": "echo \"Error: no test specified\" && exit 0",
     "buildAssets": "webpack --progress --display-error-details && grunt"
   },
-  "bin": {
-    "heritage-geojson": "heritage-geojson.js"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/domjtalbot/find-a-listing.git"
