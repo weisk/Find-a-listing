@@ -11,7 +11,7 @@ module.exports = {
     devtool: 'source-map',
     entry: {
         app: './assets/js/app.js',
-        vendor: ['react', 'react-dom', 'modernizr', 'mapbox-gl', '@turf/turf']
+        vendor: ['react', 'react-dom', 'modernizr', 'mapbox-gl', '@turf/turf', 'moment', 'polyline', 'mapbox-gl-directions']
     },
     output: {
         path: 'bin',
@@ -41,7 +41,7 @@ module.exports = {
             },
             {
                 test: /mapbox-gl.+\.js$/,
-                loader: 'transform/cacheable?brfs'
+                loader: 'transform?brfs'
             },
             {
                 test: /\.js$/,
@@ -72,7 +72,7 @@ module.exports = {
                 loader: '@domjtalbot/sassdoc-loader'
             },
             {
-                loader: 'transform/cacheable?brfs'
+                loader: 'transform?brfs'
             }
         ]
     },
@@ -133,7 +133,6 @@ module.exports = {
             },
             comments: false,
         }),
-        new webpack.optimize.DedupePlugin(),
         new CleanWebpackPlugin(['./bin/js', './bin/css/', './bin/webpack.json'], {
               root: __dirname,
         }),
