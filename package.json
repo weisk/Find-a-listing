@@ -63,6 +63,7 @@
     "helmet": "^2.1.2",
     "heroku-ssl-redirect": "0.0.3",
     "image-webpack-loader": "^2.0.0",
+    "jquery": "^3.1.0",
     "json-loader": "^0.5.4",
     "load-grunt-tasks": "^3.5.2",
     "mapbox-gl": "^0.22.1",
