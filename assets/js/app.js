@@ -1,6 +1,6 @@
 /* global navigator */
 /* eslint-disable */
-import mapboxgl, { Map, Geolocate, LngLatBounds } from 'mapbox-gl';
+import mapboxgl, { Map, Geolocate, LngLatBounds, util } from 'mapbox-gl';
 import '../../node_modules/mapbox-gl/dist/mapbox-gl.css';
 import '_leaflet.scss';
 import { getCurrentPosition } from 'navigator';
@@ -9,6 +9,8 @@ import { getData, getNearest, getWithin } from 'heritageList';
 import Directions from 'mapbox-gl-directions';
 import { decode } from 'polyline';
 import moment from 'moment';
+import geobuf from 'geobuf';
+import Pbf from 'pbf';
 
 mapboxgl.accessToken = `pk.eyJ1IjoiZG9tanQiLCJhIjoiY2lzNTM0aW90MDAxMzJ1bmZkOWU5ZHdqaiJ9.ZJTAzeB-kGyLv71rkxaRPw`;
 window.mapboxgl = mapboxgl;
@@ -95,14 +97,16 @@ map.on('load', () => {
     console.log('map load');
     map.fitBounds(ukBounds);
 
-    getData('/bin/data/dist/listedBuildings.geojson', (data) => {
-        listedBuildings = data;
+    util.getArrayBuffer('/bin/data/dist/listedBuildings.pbf', (er, data) => {
+        listedBuildings = geobuf.decode(new Pbf(data));
         listedBuildings.features.forEach((feature) => {
-                const marker = {
-                    marker: 'marker',
-                    'marker-size': '11',
-                };
-                feature.properties = Object.assign({}, feature.properties, marker);
+            const markerIcon = (feature.properties.riskId !== undefined) ? 'fire-station' : 'marker';
+            // console.log(markerIcon);
+            const marker = {
+                marker: markerIcon,
+                'marker-size': '11',
+            };
+            feature.properties = Object.assign({}, feature.properties, marker);
         });
         map.addSource('HARlistedbuildings', {
             type: 'geojson',

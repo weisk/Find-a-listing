@@ -5,10 +5,6 @@ import { getJSON } from 'jquery';
 const fs = require('fs');
 const path = require('path');
 
-export function getData(file, success) {
-    getJSON(file, success);
-}
-
 export function getNearest(pointA, pointB, success) {
     const asset = nearest(pointA, pointB);
     let unit = 'miles';
