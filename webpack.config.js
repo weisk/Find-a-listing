@@ -133,7 +133,7 @@ module.exports = {
             },
             comments: false,
         }),
-        new CleanWebpackPlugin(['./bin/js', './bin/css/', './bin/webpack.json'], {
+        new CleanWebpackPlugin(['bin/js', 'bin/css/', 'bin/webpack.json'], {
               root: __dirname,
         }),
         new webpack.optimize.OccurrenceOrderPlugin(true),
