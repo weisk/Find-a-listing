@@ -102,7 +102,7 @@ map.on('load', () => {
                     marker: 'marker',
                     'marker-size': '11',
                 };
-                feature.p = Object.assign({}, feature.p, marker);
+                feature.properties = Object.assign({}, feature.properties, marker);
         });
         map.addSource('HARlistedbuildings', {
             type: 'geojson',
