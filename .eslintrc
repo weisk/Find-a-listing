@@ -1,7 +1,7 @@
 {
-  'parser': 'babel-eslint',
-  'extends': 'airbnb',
-  'rules': {
+    'parser': 'babel-eslint',
+    'extends': 'airbnb',
+    'rules': {
       'indent': [2, 4, { 'SwitchCase': 1, 'VariableDeclarator': 1 }],
       'react/prefer-stateless-function': 0,
       'valid-jsdoc': 2,
@@ -12,5 +12,8 @@
                 'ClassDeclaration': false,
             },
         }],
-  },
+    },
+    'settings': {
+        'import/resolver': webpack,
+    }
 }
