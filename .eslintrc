@@ -12,8 +12,5 @@
                 'ClassDeclaration': false,
             },
         }],
-    },
-    'settings': {
-        'import/resolver': webpack,
     }
 }

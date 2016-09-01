@@ -78,7 +78,6 @@ module.exports = {
     },
     resolve: {
         extensions: ['', '.js', '.jsx', '.scss', '.sass', '.css'],
-        modulesDirectories: ['', 'node_modules', './assets/js', './assets/js/components', './assets/scss', './assets/scss/components'],
         alias: {
             modernizr$: path.resolve(__dirname, ".modernizrrc"),
             'webworkify': 'webworkify-webpack',

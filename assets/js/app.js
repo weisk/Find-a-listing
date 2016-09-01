@@ -1,14 +1,15 @@
 /* global window, navigator */
-import '_leaflet.scss';
-import directions from 'directions';
-import { getNearest, getWithin } from 'heritageList';
-import { map } from 'map';
-import { userlocation, getCurrentPosition } from 'navigator';
-import mapboxgl, { LngLatBounds, util } from 'mapbox-gl';
-import turf from '@turf/turf';
 import { decode } from 'geobuf';
+import mapboxgl, { LngLatBounds, util } from 'mapbox-gl';
 import Pbf from 'pbf';
+import turf from '@turf/turf';
+
 import '../../node_modules/mapbox-gl/dist/mapbox-gl.css';
+import '../scss/_leaflet.scss';
+import directions from './directions';
+import { getNearest, getWithin } from './heritageList';
+import { map } from './map';
+import { userlocation, getCurrentPosition } from './navigator';
 
 // _map is a predefined variable for Directions()
 /* eslint-disable no-underscore-dangle */
