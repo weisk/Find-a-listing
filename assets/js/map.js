@@ -1,5 +1,6 @@
 /* global window, navigator */
 import mapboxgl, { Map } from 'mapbox-gl';
+
 import '../../node_modules/mapbox-gl/dist/mapbox-gl.css';
 
 /* eslint-disable max-len */
@@ -19,7 +20,7 @@ export const maxUkBounds = [
 
 const map = new Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/dark-v9',
+    style: 'mapbox://styles/domjt/ciskn4fn100du2xpbh2drcyxy',
     center: [-2.23001, 54.314072],
     zoom: 4.7,
     minZoom: 4.7,
