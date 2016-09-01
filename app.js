@@ -1,7 +1,4 @@
 /* eslint-disable no-console */
-import env from 'dotenv';
-env.config({ silent: true });
-
 import path from 'path';
 import express from 'express';
 import handlebars from 'express-handlebars';
@@ -9,8 +6,10 @@ import fs from 'fs';
 import spdy from 'spdy';
 import helmet from 'helmet';
 import compress from 'compression';
-import routeConfig from './routes/index.js';
 import minifyHTML from 'express-minify-html';
+
+import './models/env';
+import routeConfig from './routes/index.js';
 
 console.log(`ENV: ${process.env.NODE_ENV}`);
 
@@ -54,7 +53,6 @@ if (process.env.NODE_ENV !== 'development') {
 }
 
 if (process.env.NODE_ENV === 'production') {
-
     const sslCa = fs.readFileSync(process.env.SSL_CA);
     sslOptions = Object.assign({}, sslOptions, {
         ca: sslCa,

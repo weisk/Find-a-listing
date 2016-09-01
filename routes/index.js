@@ -1,13 +1,12 @@
 /* eslint-disable no-console */
-
-import env from 'dotenv';
-env.config({ silent: true });
-
+import sslRedirect from 'heroku-ssl-redirect';
 import express from 'express';
+
 import homepage from './homepage-route';
 import mappage from './map-route';
+
+import '../models/env';
 import { assetsByChunkName as webpack } from '../bin/webpack.json';
-import sslRedirect from 'heroku-ssl-redirect';
 
 export default function routeConfig(app) {
     // Global variables
@@ -22,8 +21,8 @@ export default function routeConfig(app) {
     /* eslint-enable no-param-reassign */
 
     // Routes
-    app.use('/', homepage);
-    app.use('/map', mappage);
+    app.use('/', mappage);
+    // app.use('/map', mappage);
 
     if (process.env.NODE_ENV !== 'production') {
         app.use(sslRedirect());
