@@ -2,8 +2,8 @@
 import sslRedirect from 'heroku-ssl-redirect';
 import express from 'express';
 
-import homepage from './homepage-route';
-import mappage from './map-route';
+import reactServer from './react-server';
+import mapRoute from './map-route';
 
 import '../models/env';
 import { assetsByChunkName as webpack } from '../bin/webpack.json';
@@ -21,8 +21,8 @@ export default function routeConfig(app) {
     /* eslint-enable no-param-reassign */
 
     // Routes
-    app.use('/', mappage);
-    // app.use('/map', mappage);
+    app.use('/', mapRoute);
+    app.use('/react', reactServer);
 
     if (process.env.NODE_ENV !== 'production') {
         app.use(sslRedirect());

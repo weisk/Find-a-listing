@@ -1,11 +1,7 @@
 /* eslint-disable no-console */
+import { Router } from 'express';
 
-import express from 'express';
-import Parser from 'dbf-parser';
-import fs from 'fs';
-import path from 'path';
-
-const router = new express.Router();
+const router = new Router();
 
 router.get('/', (req, res) => {
     res.set('Cache-control', 'private, max-age=600');
