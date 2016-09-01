@@ -5,7 +5,7 @@ module.exports = (grunt) => {
     grunt.initConfig({
         realFavicon: {
     		favicons: {
-    			src: 'assets/favicon/logo.png',
+    			src: 'assets/favicon/logo.jpg',
     			dest: 'bin/favicons/',
     			options: {
     				iconsPath: '/bin/favicons/',
@@ -15,9 +15,6 @@ module.exports = (grunt) => {
     						pictureAspect: 'backgroundAndMargin',
     						backgroundColor: '#ffffff',
     						margin: '14%',
-                            "startup_image": {
-            					"background_color": "#ffffff"
-            				},
     						assets: {
     							ios6AndPriorIcons: true,
     							ios7AndLaterIcons: true,
@@ -86,11 +83,11 @@ module.exports = (grunt) => {
     							lowResolutionIcons: true
     						}
     					},
-    					safariPinnedTab: {
+    					/*safariPinnedTab: {
     						pictureAspect: 'blackAndWhite',
     						threshold: 93.28125,
     						themeColor: '#017143'
-    					}
+    					}*/
     				},
     				settings: {
     					compression: 2,
