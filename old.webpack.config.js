@@ -10,26 +10,27 @@ module.exports = {
     context: __dirname,
     devtool: 'source-map',
     entry: {
-        app: './assets/js/app.js',
-        vendor: ['react', 'react-dom', 'modernizr', 'mapbox-gl', '@turf/turf', 'moment', 'polyline', 'mapbox-gl-directions']
+        app: './modules/routes.js',
+        vendor: ['react', 'react-dom']
     },
     output: {
-        path: 'bin',
-        filename: 'js/[name].[chunkhash].js',
-        chunkFilename: "js/[chunkhash].js"
+        path: 'public',
+        filename: 'js/[name].js',
+        chunkFilename: "js/[chunkhash].js",
+        publicPath: 'https://localhost:5001/'
     },
     module: {
-        preLoaders: [
+        /*preLoaders: [
             /*{
                 test: /\.scss$/,
                 loader: 'scsslint'
-            },*/
+            },
             {
                 test: /\.js$/,
                 exclude:  ['node_modules', 'bower_components', 'bin'],
                 loader: 'eslint'
             },
-        ],
+        ],*/
         loaders: [
             {
                 test: /\.(json|geojson)$/,
