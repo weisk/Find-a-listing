@@ -22,7 +22,7 @@ let sslKey = null;
 let sslCrt = null;
 let sslOptions = {};
 
-if (process.env.NODE_ENV !== 'development') {
+if (process.env.NODE_ENV !== 'heroku') {
     sslKey = fs.readFileSync(process.env.SSL_KEY);
     sslCrt = fs.readFileSync(process.env.SSL_CRT);
     sslOptions = {
@@ -98,7 +98,7 @@ app.engine('hbs', handlebars({
 }));
 
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'heroku') {
     app.listen(process.env.PORT, http2Host, () => {
         console.log(`HTTP:  http://${http2Host}:${process.env.PORT}`);
     });
