@@ -22,10 +22,21 @@ console.log(`Webpack env: ${NODE_ENV}`);
  */
 const devConfig = {
     devtool: 'source-map',
+    devServer: {
+        'content-base': 'public/',
+        inline: true,
+        'history-api-fallback': true,
+        https: true,
+        host: '0.0.0.0',
+        port: 5001,
+        compress: true,
+        colors: true,
+    },
     output: {
         filename: '[name].js',
         chunkFilename: '[name].js',
         path: join(__dirname, 'public/assets/'),
+        publicPath: 'https://localhost:5001/assets/',
     },
     plugins: [
         new ExtractTextPlugin('css/[name].css', {
@@ -43,6 +54,7 @@ const prodConfig = {
         filename: '[name].[hash].js',
         chunkFilename: '[name].[chunkhash].js',
         path: join(__dirname, 'public/assets/[hash]'),
+        publicPath: '/assets/[hash]/',
     },
     plugins: [
         new ExtractTextPlugin('css/[name].[chunkhash].css', {
