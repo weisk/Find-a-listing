@@ -35,11 +35,14 @@ export default function routeConfig(app) {
     /* eslint-enable no-param-reassign */
 
     // Routes
-    app.use('/', reactServer);
     // app.use('/react', mapRoute);
+    app.use('/assets', express.static('public/assets', {
+        maxAge: '30 days',
+    }));
+    app.use('/', reactServer);
+
 
     if (process.env.NODE_ENV !== 'production') {
         app.use(sslRedirect());
-        app.use('/assets', express.static('./public', { maxAge: '30 days' }));
     }
 }
