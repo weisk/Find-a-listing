@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { readFileSync } from 'fs';
-import path from 'path';
+import { resolve } from 'path';
 import express from 'express';
 import handlebars from 'express-handlebars';
 import { createServer } from 'spdy';
@@ -47,7 +47,7 @@ app.use(minifyHTML({
 }));
 
 app.set('port', http2PortNumber);
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', resolve(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.engine('hbs', handlebars({
     defaultLayout: 'layout',
@@ -56,6 +56,7 @@ app.engine('hbs', handlebars({
     partialsDir: 'views/partials',
 }));
 
+/* eslint-disable no-case-declarations */
 switch (NODE_ENV) {
     case 'local':
     case 'development':
@@ -69,7 +70,7 @@ switch (NODE_ENV) {
                 honorCipherOrder: true,
             },
         };
-        /*const sslCa = fs.readFileSync(process.env.SSL_CA);
+        /* const sslCa = fs.readFileSync(process.env.SSL_CA);
         sslOptions = Object.assign({}, sslOptions, {
             ca: sslCa,
         });*/
@@ -85,6 +86,6 @@ switch (NODE_ENV) {
             console.log('Server running...');
         });
 }
+/* eslint-disable no-case-declarations */
 
-// Define routes
 routeConfig(app);

@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import { readFileSync } from 'fs';
-import path from 'path';
 
 import sslRedirect from 'heroku-ssl-redirect';
 import express from 'express';
@@ -9,8 +8,16 @@ import reactServer from './react-server';
 // import mapRoute from './map-route';
 
 import '../models/env';
-import { assetsByChunkName as webpack, publicPath } from 'webpackjson';
+/* eslint-disable import/no-extraneous-dependencies, import/imports-first, import/no-unresolved */
+import { assetsByChunkName, publicPath } from 'webpackjson';
+/* eslint-enable import/no-extraneous-dependencies, import/imports-first, import/no-unresolved */
 
+/**
+ * Express route config
+ *
+ * @param  {Object} app - Express instance
+ * @return {Object} - Express app with routes
+ */
 export default function routeConfig(app) {
     let appJs;
     let vendorJs;
@@ -21,11 +28,11 @@ export default function routeConfig(app) {
         app.locals.webpack_manifest = JSON.stringify(manifestContents);
         app.locals.GA_ID = process.env.GA_ID;
         /* eslint-enable no-param-reassign */
-        vendorJs = webpack.vendor;
-        appJs = webpack.app;
+        vendorJs = assetsByChunkName.vendor;
+        appJs = assetsByChunkName.app;
     } else {
-        vendorJs = webpack.vendor[0];
-        appJs = webpack.app[0];
+        vendorJs = assetsByChunkName.vendor[0];
+        appJs = assetsByChunkName.app[0];
     }
     /* eslint-disable no-param-reassign */
     app.locals.webpack_vendor = `${publicPath}${vendorJs}`;

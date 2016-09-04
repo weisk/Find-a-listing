@@ -4,4 +4,4 @@ env.config({
     silent: true,
 });
 
-export { env as default }
+export { env as default };
