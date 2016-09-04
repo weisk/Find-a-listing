@@ -12,10 +12,19 @@ export default function routeConfig(app) {
     // Global variables
     /* eslint-disable no-param-reassign */
     console.log(`publicPath: ${publicPath}`);
-    // app.locals.webpack_manifest = `${publicPath}${webpack.manifest[0]}`;
-    app.locals.webpack_vendor = `${publicPath}${webpack.vendor[0]}`;
-    app.locals.webpack_app = `${publicPath}${webpack.app[0]}`;
+    if (process.env.NODE_ENV === 'production') {
+        app.locals.webpack_manifest = `${publicPath}manifest.json`;
+        console.log(`manifest.json: ${app.locals.webpack_manifest}`);
+        app.locals.webpack_vendor = `${publicPath}${webpack.vendor}`;
+        app.locals.webpack_app = `${publicPath}${webpack.app}`;
+    } else {
+        app.locals.webpack_vendor = `${publicPath}${webpack.vendor[0]}`;
+        app.locals.webpack_app = `${publicPath}${webpack.app[0]}`;
+    }
     // app.locals.webpack_app_css = `${publicPath}${webpack.app[1]}`;
+
+    console.log(`vendor.js: ${app.locals.webpack_vendor}`);
+    console.log(`app.js: ${app.locals.webpack_app}`);
     if (process.env.NODE_ENV === 'production') {
         app.locals.GA_ID = process.env.GA_ID;
     }
