@@ -224,8 +224,4 @@ switch (NODE_ENV) {
 const webpackConfig = Object.assign({}, sharedConfig, envConfig);
 webpackConfig.plugins = [...sharedConfig.plugins, ...envConfig.plugins];
 
-const filePath = resolve(__dirname, 'webpack.test.config.js');
-const data = JSON.stringify(webpackConfig);
-writeFileSync(filePath, data);
-
 export { webpackConfig as default }
