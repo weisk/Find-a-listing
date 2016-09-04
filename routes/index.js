@@ -31,8 +31,8 @@ export default function routeConfig(app) {
     /* eslint-enable no-param-reassign */
 
     // Routes
-    app.use('/', mapRoute);
-    app.use('/react', reactServer);
+    app.use('/', reactServer);
+    // app.use('/react', mapRoute);
 
     if (process.env.NODE_ENV !== 'production') {
         app.use(sslRedirect());

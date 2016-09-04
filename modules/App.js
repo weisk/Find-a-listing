@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+/* eslint-disable react/prop-types */
+import React, { Component } from 'react';
 
 export default class App extends Component {
     static displayName = 'App';
@@ -9,6 +10,6 @@ export default class App extends Component {
                 <h1>React Router</h1>
                 {this.props.children}
             </div>
-        )
+        );
     }
-};
+}
