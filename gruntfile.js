@@ -6,9 +6,9 @@ module.exports = (grunt) => {
         realFavicon: {
     		favicons: {
     			src: 'assets/favicon/logo.jpg',
-    			dest: 'bin/favicons/',
+    			dest: 'public/assets/favicons/',
     			options: {
-    				iconsPath: '/bin/favicons/',
+    				iconsPath: '/assets/favicons/',
     				html: [ 'views/partials/_favicons.hbs'],
     				design: {
     					ios: {
