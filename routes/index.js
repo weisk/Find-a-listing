@@ -1,4 +1,7 @@
 /* eslint-disable no-console */
+import { readFileSync } from 'fs';
+import path from 'path';
+
 import sslRedirect from 'heroku-ssl-redirect';
 import express from 'express';
 
@@ -13,8 +16,9 @@ export default function routeConfig(app) {
     /* eslint-disable no-param-reassign */
     console.log(`publicPath: ${publicPath}`);
     if (process.env.NODE_ENV === 'production') {
-        app.locals.webpack_manifest = `${publicPath}manifest.json`;
-        console.log(`manifest.json: ${app.locals.webpack_manifest}`);
+        let manifestContents = readFileSync(`./public${publicPath}manifest.json`);
+        manifestContents = JSON.parse(manifestContents);
+        app.locals.webpack_manifest = JSON.stringify(manifestContents);
         app.locals.webpack_vendor = `${publicPath}${webpack.vendor}`;
         app.locals.webpack_app = `${publicPath}${webpack.app}`;
     } else {

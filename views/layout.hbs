@@ -18,12 +18,16 @@
                 ga('send', 'pageview');
             </script>
         {{/if}}
+        {{#if webpack_manifest}}
+            <script>
+                window.webpackManifest = {{{ webpack_manifest }}}
+            </script>
+        {{/if}}
     </head>
     <body>
             {{{body}}}
             <script src="https://use.typekit.net/tzv7ykt.js"></script>
             <script>try{Typekit.load({ async: true });}catch(e){}</script>
-            <script src="{{{ webpack_manifest }}}"></script>
             <script src="{{{ webpack_vendor }}}"></script>
             <script src="{{{ webpack_app }}}"></script>
     </body>
