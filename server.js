@@ -52,12 +52,12 @@ if (process.env.NODE_ENV !== 'production') {
     };
 }
 
-if (process.env.NODE_ENV !== 'production') {
+/*if (process.env.NODE_ENV !== 'production') {
     const sslCa = fs.readFileSync(process.env.SSL_CA);
     sslOptions = Object.assign({}, sslOptions, {
         ca: sslCa,
     });
-}
+}*/
 
 if (process.env.NODE_ENV !== 'production') {
     console.log('Helmet: enabled');
