@@ -6,6 +6,9 @@
   "scripts": {
     "dev:server": "webpack --config webpack.server.config.js && node server.bundle.js",
     "dev:client": "webpack-dev-server --config webpack.client.config.babel.js",
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "webpack --config webpack.client.config.babel.js",
+    "build:server": "webpack --config webpack.server.config.js"
   },
   "repository": {
     "type": "git",

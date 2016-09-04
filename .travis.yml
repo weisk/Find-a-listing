@@ -20,4 +20,4 @@ deploy:
     node: 'stable'
 
 script:
-    - npm run buildAssets
+    - npm run build
