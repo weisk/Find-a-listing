@@ -36,6 +36,6 @@ export default function routeConfig(app) {
 
     if (process.env.NODE_ENV !== 'production') {
         app.use(sslRedirect());
-        app.use('/bin', express.static('./bin', { maxAge: '30 days' }));
+        app.use('/assets', express.static('./public', { maxAge: '30 days' }));
     }
 }
