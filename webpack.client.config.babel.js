@@ -3,6 +3,7 @@ import path, { resolve, join } from 'path';
 
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import cssnext from 'postcss-cssnext';
+import DashboardPlugin from 'webpack-dashboard/plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import PathChunkPlugin from 'path-chunk-webpack-plugin';
 import webpack, { optimize, DefinePlugin } from 'webpack';
@@ -42,6 +43,7 @@ const devConfig = {
         new ExtractTextPlugin('css/[name].css', {
             allChunks: false
         }),
+        new DashboardPlugin(),
     ],
 };
 
