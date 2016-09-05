@@ -7,6 +7,7 @@ import { createServer } from 'spdy';
 import helmet, { hsts } from 'helmet';
 import compress from 'compression';
 import minifyHTML from 'express-minify-html';
+import requestIp from 'request-ip';
 
 import './models/env';
 import routeConfig from './routes/index.js';
@@ -55,6 +56,8 @@ app.engine('hbs', handlebars({
     layoutsDir: 'views',
     partialsDir: 'views/partials',
 }));
+
+app.use(requestIp.mw());
 
 /* eslint-disable no-case-declarations */
 switch (NODE_ENV) {
