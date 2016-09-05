@@ -1,19 +1,31 @@
-import fs, { writeFileSync } from 'fs';
+import fs, { writeFileSync, readFileSync } from 'fs';
 import path, { resolve, join } from 'path';
 
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import cssnext from 'postcss-cssnext';
 import DashboardPlugin from 'webpack-dashboard/plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import PathChunkPlugin from 'path-chunk-webpack-plugin';
-import webpack, { optimize, DefinePlugin } from 'webpack';
+import webpack, { optimize, DefinePlugin, LoaderOptionsPlugin } from 'webpack';
 import ManifestPlugin from 'webpack-manifest-plugin';
 import ChunkManifestPlugin from 'chunk-manifest-webpack-plugin';
+import SplitByPath from 'webpack-split-by-path';
 import WebpackMd5Hash from 'webpack-md5-hash';
 
 import './models/env';
 
 const NODE_ENV = process.env.NODE_ENV;
+
+const babelrcJson = JSON.parse(readFileSync('.babelrc'));
+const babelrc = {
+    ...babelrcJson,
+    babelrc: false,
+};
+babelrc.presets.forEach((preset, index) => {
+    if (preset[0] === 'es2015') {
+        babelrc.presets[index][1].modules = false;
+        return;
+    }
+});
 
 console.log(`Webpack env: ${NODE_ENV}`);
 
@@ -40,8 +52,9 @@ const devConfig = {
         publicPath: 'https://localhost:5001/assets/',
     },
     plugins: [
-        new ExtractTextPlugin('css/[name].css', {
-            allChunks: false
+        new ExtractTextPlugin({
+            filename: 'css/[name].css',
+            allChunks: false,
         }),
         new DashboardPlugin(),
     ],
@@ -59,8 +72,9 @@ const prodConfig = {
         publicPath: '/assets/[hash]/',
     },
     plugins: [
-        new ExtractTextPlugin('css/[name].[chunkhash].css', {
-            allChunks: false
+        new ExtractTextPlugin({
+            filename: 'css/[name].[chunkhash].css',
+            allChunks: false,
         }),
         new ManifestPlugin({
             fileName: 'manifest.json',
@@ -119,6 +133,7 @@ const sharedConfig = {
                     test: /\.js$/,
                     exclude: ['node_modules'],
                     loader: 'babel',
+                    query: babelrc,
                 },
                 {
                     test: /\.scss$/,
@@ -180,14 +195,22 @@ const sharedConfig = {
         }),
     ],
     plugins: [
-        new PathChunkPlugin({
-            name: 'vendor',
-            test: 'node_modules/',
+        new SplitByPath ([
+            {
+                    name: 'vendor',
+                    path: join(__dirname, 'node_modules'),
+            },
+        ], {
+            manifest: 'common',
         }),
         new DefinePlugin({
             'process.env': {
                 'NODE_ENV': JSON.stringify(NODE_ENV),
             },
+        }),
+        new LoaderOptionsPlugin({
+            minimize: true,
+            debug: false,
         }),
         new optimize.UglifyJsPlugin({
             compress: {
