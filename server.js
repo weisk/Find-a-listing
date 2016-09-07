@@ -57,7 +57,13 @@ app.engine('hbs', handlebars({
     partialsDir: 'views/partials',
 }));
 
-app.use(requestIp.mw());
+app.use((req, res, next) => {
+    const clientIp = requestIp.getClientIp(req);
+    /* eslint-disable no-param-reassign */
+    req.clientIp = (clientIp === '127.0.0.1') ? process.env.IP : clientIp;
+    /* eslint-enable no-param-reassign */
+    next();
+});
 
 /* eslint-disable no-case-declarations */
 switch (NODE_ENV) {
