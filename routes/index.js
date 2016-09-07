@@ -8,6 +8,7 @@ import reactServer from './react-server';
 // import mapRoute from './map-route';
 
 import '../models/env';
+import componentLibrary from './componentLibrary';
 /* eslint-disable import/no-extraneous-dependencies, import/imports-first, import/no-unresolved */
 import { assetsByChunkName, publicPath } from 'webpackjson';
 /* eslint-enable import/no-extraneous-dependencies, import/imports-first, import/no-unresolved */
@@ -50,6 +51,7 @@ export default function routeConfig(app) {
     if (process.env.HEROKU) {
         app.use(sslRedirect());
     }
+    app.use('/component', componentLibrary);
     app.use('/assets', express.static('public/assets', {
         maxAge: '30 days',
     }));
