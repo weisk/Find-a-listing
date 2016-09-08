@@ -1,10 +1,10 @@
 import fs, { writeFileSync, readFileSync } from 'fs';
-import path, { resolve, join } from 'path';
+import { resolve, join } from 'path';
 
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import cssnext from 'postcss-cssnext';
 import DashboardPlugin from 'webpack-dashboard/plugin';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import ExtractTextPlugin, { extract } from 'extract-text-webpack-plugin';
 import webpack, { optimize, DefinePlugin, LoaderOptionsPlugin } from 'webpack';
 import ManifestPlugin from 'webpack-manifest-plugin';
 import ChunkManifestPlugin from 'chunk-manifest-webpack-plugin';
@@ -51,10 +51,13 @@ const devConfig = {
         path: join(__dirname, 'public/assets/'),
         publicPath: 'https://localhost:5001/assets/',
     },
+    sassLoader: {
+        outputStyle: 'expanded',
+        sourceMapEmbed: true,
+    },
     plugins: [
         new ExtractTextPlugin({
-            filename: 'css/[name].css',
-            allChunks: false,
+            filename: '[name].css',
         }),
         new DashboardPlugin(),
     ],
@@ -73,12 +76,19 @@ const prodConfig = {
     },
     plugins: [
         new ExtractTextPlugin({
-            filename: 'css/[name].[chunkhash].css',
+            filename: '[name].[chunkhash].css',
             allChunks: false,
         }),
         new ManifestPlugin({
             fileName: 'manifest.json',
         }),
+        new optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false,
+            },
+            comments: false,
+        }),
+        new optimize.DedupePlugin(),
     ],
 };
 
@@ -138,19 +148,19 @@ const sharedConfig = {
                 {
                     test: /\.scss$/,
                     exclude: ['node_modules'],
-                    loader: ExtractTextPlugin.extract([
-                        'css',
+                    loader: extract([
+                        'css?-minimize',
                         'postcss',
                         'sass',
                     ]),
                 },
-                {
+                /*{
                     test: /\.css$/,
                     loader: ExtractTextPlugin.extract([
-                        'css',
+                        'css?-minimize',
                         'postcss',
                     ]),
-                },
+                },*/
             ],
             postLoaders: [
                 {
@@ -161,27 +171,30 @@ const sharedConfig = {
             ],
     },
     sassLoader: {
-            includePaths: [
-                    __dirname,
-                    path.resolve(__dirname, 'node_modules'),
-                    path.resolve(__dirname, 'assets/scss'),
-                    path.resolve(__dirname, 'assets/scss/components'),
-            ],
+        includePaths: [
+            __dirname,
+            resolve(__dirname, 'node_modules'),
+            resolve(__dirname, 'assets/scss'),
+            resolve(__dirname, 'assets/scss/components'),
+        ],
     },
     sassdoc: {
-        entry: path.join(__dirname, 'assets/**/*.scss'),
+        entry: join(__dirname, 'assets/**/*.scss'),
         config: '.sassdoc.yml'
     },
     documentation: {
-            entry: path.join(__dirname, 'assets/js/**/*.*'),
+            entry: join(__dirname, 'assets/js/**/*.*'),
             github: true,
             format: 'html',
-            output: path.join(__dirname, 'documentation/js'),
+            output: join(__dirname, 'documentation/js'),
     },
     eslint: {
             fix: true,
             failOnError: false,
             failOnWarning: false,
+    },
+    css: {
+
     },
     postcss: () => [
         cssnext({
@@ -190,7 +203,7 @@ const sharedConfig = {
                 'ie 9',
                 'ie 10',
                 'ie 11',
-                '> 1%'
+                '> 1%',
             ],
         }),
     ],
@@ -206,17 +219,12 @@ const sharedConfig = {
         new DefinePlugin({
             'process.env': {
                 'NODE_ENV': JSON.stringify(NODE_ENV),
+                'mapboxKey': JSON.stringify(process.env.mapboxKey),
             },
         }),
         new LoaderOptionsPlugin({
             minimize: true,
             debug: false,
-        }),
-        new optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false,
-            },
-            comments: false,
         }),
         new CleanWebpackPlugin([
             'bin/webpack.json',
@@ -246,7 +254,17 @@ switch (NODE_ENV) {
     default:
         envConfig = prodConfig;
 }
-const webpackConfig = Object.assign({}, sharedConfig, envConfig);
-webpackConfig.plugins = [...sharedConfig.plugins, ...envConfig.plugins];
+const webpackConfig = {
+    ...sharedConfig,
+    ...envConfig,
+};
+webpackConfig.plugins = [
+    ...sharedConfig.plugins,
+    ...envConfig.plugins,
+];
+webpackConfig.sassLoader = {
+    ...sharedConfig.sassLoader,
+    ...envConfig.sassLoader,
+};
 
 export { webpackConfig as default }
