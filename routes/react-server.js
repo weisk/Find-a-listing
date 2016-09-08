@@ -9,7 +9,6 @@ import routes from '../modules/routes';
 const router = new Router();
 
 router.get('*', (req, res) => {
-    console.log(`IP: ${req.clientIp}`);
     res.set('Cache-control', 'private, max-age=600');
     match({
         routes,
