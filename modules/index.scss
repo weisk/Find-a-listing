@@ -1,0 +1,12 @@
+@import 'typography';
+
+$body-bg: #f9f9f9;
+$body-padding: 20px;
+
+body {
+    padding-top: $body-padding;
+    padding-right: $body-padding;
+    padding-bottom: $body-padding;
+    padding-left: $body-padding;
+    background-color: $body-bg;
+}
