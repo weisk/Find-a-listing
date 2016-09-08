@@ -8,16 +8,20 @@ import helmet, { hsts } from 'helmet';
 import compress from 'compression';
 import minifyHTML from 'express-minify-html';
 import requestIp from 'request-ip';
+/* eslint-disable no-unused-vars */
+import { green, dim, bold, yellow } from 'colors';
+/* eslint-enable no-unused-vars */
 
 import './models/env';
 import routeConfig from './routes/index.js';
 
 // Server settings
 const app = express();
-const http2PortNumber = process.env.HTTP2PORT || 5000;
 const http2Host = process.env.HTTP2HOST;
 const NODE_ENV = process.env.NODE_ENV;
-console.log(`ENV: ${NODE_ENV}`);
+const http2PortNumber = NODE_ENV ? process.env.HTTP2PORT : process.env.PORT;
+console.log('------------------------------'.yellow);
+console.log('ENV:'.dim, `${NODE_ENV}`);
 
 app.use(helmet());
 app.use(hsts({
@@ -65,10 +69,14 @@ app.use((req, res, next) => {
     next();
 });
 
+routeConfig(app);
+
+let protocol;
 /* eslint-disable no-case-declarations */
 switch (NODE_ENV) {
     case 'local':
     case 'development':
+        protocol = 'http2';
         const sslKey = readFileSync(process.env.SSL_KEY);
         const sslCrt = readFileSync(process.env.SSL_CRT);
         const sslOptions = {
@@ -83,18 +91,16 @@ switch (NODE_ENV) {
         sslOptions = Object.assign({}, sslOptions, {
             ca: sslCa,
         });*/
-        createServer(sslOptions, app).listen(http2PortNumber, http2Host, () => {
-            console.log(`HTTP2:  https://${http2Host}:${http2PortNumber}`);
-            console.log('Server running...');
-        });
+        createServer(sslOptions, app).listen(http2PortNumber, http2Host);
         break;
     case 'production':
     default:
-        app.listen(process.env.PORT, http2Host, () => {
-            console.log(`HTTP:  http://${http2Host}:${process.env.PORT}`);
-            console.log('Server running...');
-        });
+        protocol = 'http';
+        app.listen(process.env.PORT, http2Host);
 }
 /* eslint-disable no-case-declarations */
 
-routeConfig(app);
+console.log('Protocol:'.dim, protocol);
+console.log('URL:'.dim, `//${http2Host}:${http2PortNumber}`);
+console.log('------------------------------'.yellow);
+console.log(`${NODE_ENV} server running...`.green.bold);
