@@ -10,6 +10,9 @@ import ManifestPlugin from 'webpack-manifest-plugin';
 import ChunkManifestPlugin from 'chunk-manifest-webpack-plugin';
 import SplitByPath from 'webpack-split-by-path';
 import WebpackMd5Hash from 'webpack-md5-hash';
+/* eslint-disable no-unused-vars */
+import { green, dim, bold } from 'colors';
+/* eslint-enable no-unused-vars */
 
 import './models/env';
 
@@ -27,7 +30,7 @@ babelrc.presets.forEach((preset, index) => {
     }
 });
 
-console.log(`Webpack env: ${NODE_ENV}`);
+console.log('Webpack env:'.dim.green, `${NODE_ENV}`.green.bold);
 
 /**
  * Webpack settings required for development env.
@@ -118,6 +121,7 @@ const sharedConfig = {
             preLoaders: [
                 {
                     test: /\.scss$/,
+                    exclude: 'node_modules',
                     loader: 'scsslint',
                 },
                 {
@@ -129,10 +133,12 @@ const sharedConfig = {
             loaders: [
                 {
                     test: /\.(json|geojson)$/,
+                    exclude: 'node_modules',
                     loader: 'json',
                 },
                 {
                     test: /\.modernizrrc$/,
+                    exclude: 'node_modules',
                     loader: 'modernizr',
                 },
                 {
@@ -141,13 +147,13 @@ const sharedConfig = {
                 },
                 {
                     test: /\.js$/,
-                    exclude: ['node_modules'],
+                    exclude: 'node_modules',
                     loader: 'babel',
                     query: babelrc,
                 },
                 {
                     test: /\.scss$/,
-                    exclude: ['node_modules'],
+                    exclude: 'node_modules',
                     loader: extract([
                         'css?-minimize',
                         'postcss',
@@ -165,7 +171,7 @@ const sharedConfig = {
             postLoaders: [
                 {
                     test: /\.scss$/,
-                    exclude: ['node_modules'],
+                    exclude: 'node_modules',
                     loader: '@domjtalbot/sassdoc-loader',
                 },
             ],
