@@ -10,6 +10,8 @@ import ManifestPlugin from 'webpack-manifest-plugin';
 import ChunkManifestPlugin from 'chunk-manifest-webpack-plugin';
 import SplitByPath from 'webpack-split-by-path';
 import WebpackMd5Hash from 'webpack-md5-hash';
+import WebpackShellPlugin from 'webpack-shell-plugin';
+import BellOnBundlerErrorPlugin from 'bell-on-bundler-error-plugin';
 /* eslint-disable no-unused-vars */
 import { green, dim, bold } from 'colors';
 /* eslint-enable no-unused-vars */
@@ -240,6 +242,11 @@ const sharedConfig = {
         }),
         new WebpackMd5Hash(),
         new optimize.OccurrenceOrderPlugin(),
+        new WebpackShellPlugin({
+            onBuildStart: [],
+            onBuildEnd: ['grunt'],
+        }),
+        new BellOnBundlerErrorPlugin(),
         function() {
             this.plugin('done', stats => {
                 const filePath = resolve(__dirname, 'bin/webpack.json');
