@@ -15,8 +15,11 @@ addons:
     - libglapi-mesa
     - libosmesa6
 cache:
+  bundler: true
   directories:
   - node_modules
+  - bin/favicons
+  - views/partials/_favicons.hbs
 deploy:
   provider: heroku
   api_key:
