@@ -1,4 +1,4 @@
-import { writeFileSync } from 'fs';
+import { writeFileSync, readFileSync } from 'fs';
 import { resolve, join } from 'path';
 
 import ExtractTextPlugin, { extract } from 'extract-text-webpack-plugin';
@@ -9,6 +9,13 @@ import { optimize, DefinePlugin } from 'webpack';
 import './models/env';
 
 const NODE_ENV = process.env.NODE_ENV;
+
+const babelrcJson = JSON.parse(readFileSync('.babelrc'));
+const babelrc = {
+    ...babelrcJson,
+    babelrc: false,
+};
+babelrc.plugins.push("transform-runtime");
 
 export default {
     context: __dirname,
@@ -55,6 +62,7 @@ export default {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 loader: 'babel',
+                query: babelrc,
             },
             {
                 test: /\.scss$/,
