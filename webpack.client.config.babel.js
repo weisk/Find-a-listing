@@ -121,11 +121,11 @@ const sharedConfig = {
     },
     module: {
             preLoaders: [
-                {
+                /*{
                     test: /\.scss$/,
                     exclude: 'node_modules',
                     loader: 'scsslint',
-                },
+                },*/
                 {
                     test: /\.js$/,
                     exclude:  ['node_modules', 'bin'],
