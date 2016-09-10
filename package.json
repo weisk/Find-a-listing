@@ -9,8 +9,8 @@
     "dev:server": "npm run build:server; npm run start:dev",
     "dev:client": "webpack-dashboard -- webpack-dev-server --config webpack.client.config.babel.js",
     "build": "npm run build:client; npm run build:server",
-    "build:client": "webpack --config webpack.client.config.babel.js --display-error-details --progress",
-    "build:server": "webpack --config webpack.server.config.babel.js --display-error-details --progress"
+    "build:client": "webpack --config webpack.client.config.babel.js --display-error-details",
+    "build:server": "webpack --config webpack.server.config.babel.js --display-error-details"
   },
   "repository": {
     "type": "git",
