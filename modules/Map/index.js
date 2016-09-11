@@ -9,7 +9,7 @@ const ukBounds = [
     [3.2667631034264275, 58.952806871160476],
     [-11.706150066966075, 49.46629330841651],
 ];
-const uk = fitBounds(window.innerWidth, window.innerHeight, ukBounds);
+const uk = fitBounds(500, 500, ukBounds);
 
 export default class Map extends Component {
     static displayName = 'Map';
