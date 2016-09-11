@@ -1,0 +1,14 @@
+@import 'typography';
+
+.mapContainer {
+    width: 100%;
+    height:100vh;
+
+    div {
+        // Override react-map-gl
+        //scss-lint:disable
+        width: inherit !important;
+        height: inherit !important;
+        //scss-lint:enable
+    }
+}

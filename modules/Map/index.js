@@ -1,14 +1,23 @@
+/* global window */
 import React, { Component, PropTypes } from 'react';
 import autobind from 'autobind-decorator';
-import MapGL from 'react-map-gl';
+import MapGL, { fitBounds } from 'react-map-gl';
+
+import './Map.scss';
+
+const ukBounds = [
+    [3.2667631034264275, 58.952806871160476],
+    [-11.706150066966075, 49.46629330841651],
+];
+const uk = fitBounds(window.innerWidth, window.innerHeight, ukBounds);
 
 export default class Map extends Component {
     static displayName = 'Map';
 
     static defaultProps = {
-        width: 250,
-        height: 250,
-        mapStyle: 'mapbox://styles/mapbox/satellite-v9',
+        width: 500,
+        height: 500,
+        mapStyle: 'mapbox://styles/domjt/cisz3ax13004q2xr0shaq4r8c',
         mapboxApiAccessToken: process.env.mapboxKey,
     }
 
@@ -22,9 +31,9 @@ export default class Map extends Component {
 
     state = {
         viewport: {
-            latitude: 37.7577,
-            longitude: -122.4376,
-            zoom: 11,
+            latitude: uk.longitude,
+            longitude: uk.latitude,
+            zoom: uk.zoom,
         },
     }
 
@@ -43,9 +52,9 @@ export default class Map extends Component {
             onChangeViewport: this.onChangeViewport,
         };
         return (
-            <MapGL
-              {...mapProps}
-            />
+            <div className="mapContainer">
+                <MapGL {...mapProps} />
+            </div>
         );
     }
 }

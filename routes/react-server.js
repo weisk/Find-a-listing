@@ -13,13 +13,15 @@ router.get('*', (req, res) => {
     match({
         routes,
         location: req.url,
-    }, (error, redirect, props) => {
+    }, (error, redirect, routerProps) => {
         if (error) {
             res.status(500).send(error.message);
         } else if (redirect) {
             res.redirect(`${redirect.pathname}${redirect.search}`);
-        } else if (props) {
-            const appHtml = renderToString(<RouterContext {...props} />);
+        } else if (routerProps) {
+            const appHtml = renderToString(
+                <RouterContext {...routerProps} />
+            );
             res.status(200).render('_reactServer', {
                 title: 'React Server',
                 appHtml,
